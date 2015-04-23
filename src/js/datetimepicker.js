@@ -337,8 +337,7 @@
             },
 
             setTime: function setTime(unixDate) {
-              var tempDate = new Date(unixDate);
-              var newDate = new Date(tempDate.getTime() + (tempDate.getTimezoneOffset() * 60000));
+              var newDate = moment.utc(unixDate).format();
 
               var oldDate = ngModelController.$modelValue;
               ngModelController.$setViewValue(newDate);
@@ -347,7 +346,7 @@
                 jQuery(configuration.dropdownSelector).dropdown('toggle');
               }
 
-              scope.onSetTime({newDate: moment.utc(unixDate).format(), oldDate: moment.utc(oldDate).format()});
+              scope.onSetTime({newDate: newDate, oldDate: moment.utc(oldDate).format()});
 
               return dataFactory[configuration.startView](unixDate);
             }
