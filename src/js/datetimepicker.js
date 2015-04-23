@@ -37,13 +37,11 @@
 
       function DateObject() {
 
-        var tempDate = new Date();
-        var localOffset = tempDate.getTimezoneOffset() * 60000;
-        this.utcDateValue = tempDate.getTime();
+        this.utcDateValue = moment.utc().format('x');
         this.selectable = true;
 
         this.localDateValue = function () {
-          return this.utcDateValue + localOffset;
+          return this.utcDateValue;
         };
 
         var validProperties = ['utcDateValue', 'localDateValue', 'display', 'active', 'selectable', 'past', 'future'];
@@ -349,7 +347,7 @@
                 jQuery(configuration.dropdownSelector).dropdown('toggle');
               }
 
-              scope.onSetTime({newDate: newDate, oldDate: oldDate});
+              scope.onSetTime({newDate: moment.utc(unixDate).format(), oldDate: moment.utc(oldDate).format()});
 
               return dataFactory[configuration.startView](unixDate);
             }
